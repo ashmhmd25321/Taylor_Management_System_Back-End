@@ -60,8 +60,8 @@ public class WebSecurityConfig {
                 .cors()
                 .disable()
                 .authorizeHttpRequests()
-                        .requestMatchers("/authenticate", "registerUser", "registerAdmin",
-                                            "registerTaylor").permitAll()
+                        .requestMatchers("/authenticate", "/registerUser", "/registerAdmin",
+                                            "/registerTaylor").permitAll()
                 .requestMatchers(HttpMethod.OPTIONS).permitAll()
                         .anyRequest().authenticated()
                         .and()

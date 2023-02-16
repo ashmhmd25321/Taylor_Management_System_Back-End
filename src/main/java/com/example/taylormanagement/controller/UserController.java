@@ -13,7 +13,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @RestController
-@CrossOrigin("*")
+@CrossOrigin("http://localhost:4200")
 public class UserController {
 
     @Autowired
