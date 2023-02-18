@@ -13,6 +13,7 @@ public class Product {
 
     private String productName;
 
+    @Column(length = 2000)
     private String productDescription;
 
     private String category;

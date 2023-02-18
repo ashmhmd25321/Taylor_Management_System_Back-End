@@ -61,7 +61,7 @@ public class WebSecurityConfig {
                 .disable()
                 .authorizeHttpRequests()
                         .requestMatchers("/authenticate", "/registerUser", "/registerAdmin",
-                                            "/registerTaylor").permitAll()
+                                            "/registerTaylor", "/getAllProducts", "/getProductDetailsById/{productId}").permitAll()
                 .requestMatchers(HttpMethod.OPTIONS).permitAll()
                         .anyRequest().authenticated()
                         .and()

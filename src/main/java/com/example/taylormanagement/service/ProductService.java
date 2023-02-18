@@ -29,4 +29,8 @@ public class ProductService {
     public Product getProductDetailsById(Integer productId) {
         return productDAO.findById(productId).get();
     }
+
+    public List<Product> findProductByStatus(String status) {
+        return productDAO.findProductByStatus(status);
+    }
 }
