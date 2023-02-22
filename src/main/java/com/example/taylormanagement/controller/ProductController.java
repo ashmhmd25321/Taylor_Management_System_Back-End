@@ -55,8 +55,11 @@ public class ProductController {
     }
 
     @GetMapping("/getAllProducts")
-    public List<Product> getAllProducts() {
-        return productService.getAllProducts();
+    public List<Product> getAllProducts(@RequestParam(defaultValue = "0") int pageNumber,
+                                        @RequestParam(defaultValue = "") String searchKey) {
+        List<Product> result = productService.getAllProducts(pageNumber, searchKey);
+        System.out.println(result.size());
+        return result;
     }
 
     @PreAuthorize("hasRole('ADMIN')")
@@ -68,5 +71,12 @@ public class ProductController {
     @GetMapping("/getProductDetailsById/{productId}")
     public Product getProductDetailsById(@PathVariable("productId") Integer productId) {
         return productService.getProductDetailsById(productId);
+    }
+
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN', 'TAYLOR')")
+    @GetMapping("/getProductDetails/{isSingleProductCheckout}/{productId}")
+    public List<Product> getProductDetails(@PathVariable(name = "isSingleProductCheckout") boolean isSingleProductCheckout,
+                                           @PathVariable(name = "productId") Integer productId) {
+                return productService.getProductDetails(isSingleProductCheckout, productId);
     }
 }
