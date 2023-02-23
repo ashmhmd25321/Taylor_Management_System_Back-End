@@ -1,6 +1,7 @@
 package com.example.taylormanagement.service;
 
 import com.example.taylormanagement.configuration.JwtRequestFilter;
+import com.example.taylormanagement.dao.CartDAO;
 import com.example.taylormanagement.dao.OrderDetailDAO;
 import com.example.taylormanagement.dao.ProductDAO;
 import com.example.taylormanagement.dao.UserDAO;
@@ -24,7 +25,10 @@ public class OrderDetailService {
     @Autowired
     private UserDAO userDAO;
 
-    public void placeOrder(OrderInput orderInput) {
+    @Autowired
+    private CartDAO cartDAO;
+
+    public void placeOrder(OrderInput orderInput, boolean isSingleProductCheckout) {
         List<OrderProductQuantity> orderProductQuantities = orderInput.getOrderProductQuantities();
 
         for (OrderProductQuantity o: orderProductQuantities) {
@@ -43,6 +47,11 @@ public class OrderDetailService {
                     product,
                     user
             );
+
+            if (!isSingleProductCheckout) {
+                List<Cart> carts = cartDAO.findByUser(user);
+                carts.stream().forEach(x -> cartDAO.deleteById(x.getCartId()));
+            }
 
             orderDetailDAO.save(orderDetail);
         }

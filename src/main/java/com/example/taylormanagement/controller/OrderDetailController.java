@@ -5,10 +5,7 @@ import com.example.taylormanagement.service.OrderDetailService;
 import com.example.taylormanagement.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @CrossOrigin("*")
@@ -17,10 +14,11 @@ public class OrderDetailController {
     @Autowired
     private OrderDetailService orderDetailService;
 
-    @PostMapping("/placeOrder")
+    @PostMapping("/placeOrder/{isSingleProductCheckout}")
     @PreAuthorize("hasAnyRole('USER', 'ADMIN', 'TAYLOR')")
-    public void placeOrder(@RequestBody OrderInput orderInput) {
-    orderDetailService.placeOrder(orderInput);
+    public void placeOrder(@PathVariable(name = "isSingleProductCheckout") boolean isSingleProductCheckout,
+                           @RequestBody OrderInput orderInput) {
+    orderDetailService.placeOrder(orderInput, isSingleProductCheckout);
     }
 
 }
